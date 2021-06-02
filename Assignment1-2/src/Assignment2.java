@@ -11,7 +11,6 @@ public class Assignment2 {
             try {
                guessed = readInput.nextInt();
                 if ((numToGuess - 10) <= guessed && ((numToGuess + 10) >= guessed)) {
-                    System.out.println("You guessed correctly the answer is: " + numToGuess);
                     wonGame = true;
                 } else {
                     chances--;
@@ -26,7 +25,7 @@ public class Assignment2 {
         }
         readInput.close();
         if (wonGame) {
-            System.out.println("You gussed correctly with in range of 10. The answer was " + numToGuess);
+            System.out.println("You gussed correctly with in range of 10. The answer is " + numToGuess);
         } else {
             System.out.println("Sorry you did not guess correctly. The answer was " + numToGuess);
         }
