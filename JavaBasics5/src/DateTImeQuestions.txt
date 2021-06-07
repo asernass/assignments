@@ -1,0 +1,14 @@
+1)
+I would use the LocalDateTime class.
+
+2)
+You would use the previous method of TemporalAdjuster class.
+
+3) ZoneOffset class tracks only the absolute offset from UTC while the zoneID class also uses the ZoneRules to determine the offset of a region.
+
+4) 
+Instant to zoneDateTIme
+ZonedDateTime zdt = Instant.now().atZone(ZoneId.systemDefault());
+
+zoneDateTime to Instant
+Instant inst = ZonedDateTime.now().toInstant();
