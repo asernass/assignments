@@ -7,6 +7,7 @@ import com.ss.uto.dao.bookings.PassengerDAO;
 import com.ss.uto.dao.flights.AirplaneDAO;
 import com.ss.uto.dao.flights.AirportDAO;
 import com.ss.uto.dao.flights.FlightDAO;
+import com.ss.uto.dao.flights.RouteDAO;
 import com.ss.uto.dao.user.UserDAO;
 import com.ss.uto.entity.bookings.Booking;
 import com.ss.uto.entity.bookings.BookingUser;
@@ -15,6 +16,7 @@ import com.ss.uto.entity.bookings.Passenger;
 import com.ss.uto.entity.flights.Airplane;
 import com.ss.uto.entity.flights.Airport;
 import com.ss.uto.entity.flights.Flight;
+import com.ss.uto.entity.flights.Route;
 import com.ss.uto.entity.user.User;
 
 import java.sql.Connection;
@@ -62,6 +64,52 @@ public class AdminService {
             conn = connectionUtil.getConnection();
             UserDAO userDAO = new UserDAO(conn);
             return userDAO.getUsers().stream().filter(user -> user.getRole().getRoleID() == 3).collect(Collectors.toList());
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public void addFlight(Flight flight) {
+        Connection conn = null;
+        try {
+            conn = connectionUtil.getConnection();
+            FlightDAO flightDAO = new FlightDAO(conn);
+            flightDAO.addFlight(flight);
+            conn.commit();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+    }
+
+    public List<Route> getAllRoutes() {
+        Connection conn = null;
+        try {
+            conn = connectionUtil.getConnection();
+            RouteDAO routeDAO = new RouteDAO(conn);
+            return routeDAO.getRoutes();
         } catch (Exception e) {
             try {
                 conn.rollback();
