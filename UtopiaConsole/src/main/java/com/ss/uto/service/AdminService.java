@@ -3,11 +3,17 @@ package com.ss.uto.service;
 import com.ss.uto.dao.bookings.BookingDAO;
 import com.ss.uto.dao.bookings.BookingUserDAO;
 import com.ss.uto.dao.bookings.FlightBookingsDAO;
+import com.ss.uto.dao.bookings.PassengerDAO;
+import com.ss.uto.dao.flights.AirplaneDAO;
+import com.ss.uto.dao.flights.AirportDAO;
 import com.ss.uto.dao.flights.FlightDAO;
 import com.ss.uto.dao.user.UserDAO;
 import com.ss.uto.entity.bookings.Booking;
 import com.ss.uto.entity.bookings.BookingUser;
 import com.ss.uto.entity.bookings.FlightBookings;
+import com.ss.uto.entity.bookings.Passenger;
+import com.ss.uto.entity.flights.Airplane;
+import com.ss.uto.entity.flights.Airport;
 import com.ss.uto.entity.flights.Flight;
 import com.ss.uto.entity.user.User;
 
@@ -37,6 +43,121 @@ public class AdminService {
             try {
                 conn.rollback();
             } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<User> getAllTravelers() {
+        Connection conn = null;
+        try {
+            conn = connectionUtil.getConnection();
+            UserDAO userDAO = new UserDAO(conn);
+            return userDAO.getUsers().stream().filter(user -> user.getRole().getRoleID() == 3).collect(Collectors.toList());
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<Airplane> getAllAirplanes() {
+        Connection conn = null;
+        try {
+            conn = connectionUtil.getConnection();
+            AirplaneDAO airplaneDAO = new AirplaneDAO(conn);
+            return airplaneDAO.getAirplanes();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<Passenger> getAllPassengers() {
+        Connection conn = null;
+        try {
+            conn = connectionUtil.getConnection();
+            PassengerDAO passengerDAO = new PassengerDAO(conn);
+            return passengerDAO.getPassengers();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<Booking> getAllBookings() {
+        Connection conn = null;
+        try {
+            conn = connectionUtil.getConnection();
+             BookingDAO bookingDAO = new BookingDAO(conn);
+            return bookingDAO.getBookings();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+            e.printStackTrace();
+        } finally {
+            try {
+                conn.close();
+            } catch (SQLException | NullPointerException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public List<Airport> getAllAirports() {
+        Connection conn = null;
+        try {
+            conn = connectionUtil.getConnection();
+            AirportDAO airportDAO = new AirportDAO(conn);
+            return airportDAO.getAirports();
+        } catch (Exception e) {
+            try {
+                conn.rollback();
+            } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
             e.printStackTrace();
